@@ -7,20 +7,20 @@ namespace CleanQuoteServices.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QuotesController : ControllerBase
+    public class LocationsController : ControllerBase
     {
         private readonly CleanQuoteServicesContext _context;
 
-        public QuotesController(CleanQuoteServicesContext context)
+        public LocationsController(CleanQuoteServicesContext context)
         {
             _context = context;
         }
 
-        // GET: api/Quotes
+        // GET: api/Locations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Quote>>> GetQuotes()
+        public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
-            return await _context.Quotes.ToListAsync();
+            return await _context.Locations.ToListAsync();
         }
     }
 }
