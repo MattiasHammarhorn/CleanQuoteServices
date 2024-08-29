@@ -1,4 +1,8 @@
 body {
-    background-color: grey;
-    color: white;
+  background-color: grey !important;
+  color: white !important;
+}
+
+form {
+    width: 500px;
 }

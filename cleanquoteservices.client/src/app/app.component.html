@@ -1,36 +1,49 @@
-<div>
+<div class="container">
+  <div>
+    <h1>CleanQuote Services - your #1 cleaning services in Stockholm & Uppsala!</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </div>
+
+  <div>
+    <h3>Want us to come cleaning? Just fill out the form below.</h3>
+  </div>
+
   <form (change)="logQuote()" (ngSubmit)="calculateQuote()">
-    <div>
-      <label for="selectedLocationId">Location</label>
-      <select name="selectedLocationId" [(ngModel)]="quote.location">
+    <div class="input-group mb-3">
+      <label for="selectedLocationId" class="form-label">Location</label>
+      <select name="selectedLocationId" [(ngModel)]="quote.location" class="form-select">
         <option *ngFor="let location of locations" [ngValue]="location" >{{location.locationName}}
         </option>
       </select>
      </div>
-     <div>
-      <label for="totalSquareMeters">Square Meters</label>
+     <div class="input-group mb-3">
+      <label for="totalSquareMeters" class="form-label">Square Meters</label>
       <input name="totalSquareMeters"
              [(ngModel)]="quote.totalSquareMeters"
-             type="number" />
+             type="number"
+             class="pl-3" />
     </div>
-    <div [hidden]="quote.location?.hasBalconyCleaning ? false : true">
-      <label for="balconyCleaningEnabled">Balcony Cleaning</label>
+    <div class="input-group mb-3 form-check" [hidden]="quote.location?.hasBalconyCleaning ? false : true">
+      <label for="balconyCleaningEnabled" class="form-check-label">Balcony Cleaning</label>
       <input name="balconyCleaningEnabled"
              [(ngModel)]="quote.balconyCleaningEnabled"
-             type="checkbox" />
+             type="checkbox"
+             class="form-check-input" />
     </div>
-    <div [hidden]="quote.location?.hasWindowCleaning ? false : true">
-      <label for="windowCleaningEnabled">Window Cleaning</label>
+    <div class="input-group mb-3 form-check" [hidden]="quote.location?.hasWindowCleaning ? false : true">
+      <label for="windowCleaningEnabled" class="form-check-label">Window Cleaning</label>
       <input name="windowCleaningEnabled"
              [(ngModel)]="quote.windowCleaningEnabled"
-             type="checkbox" />
+             type="checkbox"
+             class="form-check-input" />
     </div>
-    <div [hidden]="quote.location?.hasWasteCollection ? false : true">
-      <label for="wasteCollectionEnabled">Waste Collection</label>
+    <div class="input-group mb-3 form-check" [hidden]="quote.location?.hasWasteCollection ? false : true">
+      <label for="wasteCollectionEnabled" class="form-check-label">Waste Collection</label>
       <input name="wasteCollectionEnabled"
              [(ngModel)]="quote.wasteCollectionEnabled"
-             type="checkbox" />
+             type="checkbox"
+             class="form-check-input" />
     </div>
-    <button type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
   </form>
 </div>

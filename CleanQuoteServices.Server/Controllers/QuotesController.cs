@@ -20,26 +20,30 @@ namespace CleanQuoteServices.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Quote>>> GetQuotes()
         {
-            return await _context.Quotes.ToListAsync();
+            return Ok(await _context.Quotes.ToListAsync());
         }
 
         // POST: api/Quotes
         [HttpPost]
-        public async Task CreateQuote(Quote quote)
+        public async Task<ActionResult<Quote>> CreateQuote(Quote quote)
         {
-            // New service
+            // Price Calculation
             quote.TotalPrice = quote.Location.PricePerSqm * quote.TotalSquareMeters;
 
             // Additional optional services
-            if (quote.BalconyCleaningEnabled = true)
+            if (quote.WindowCleaningEnabled == true)
                 quote.TotalPrice += 300;
-            if (quote.BalconyCleaningEnabled = true)
-                quote.TotalPrice += 300;
-            if (quote.BalconyCleaningEnabled = true)
-                quote.TotalPrice += 300;
+            if (quote.BalconyCleaningEnabled == true)
+                quote.TotalPrice += 150;
+            if (quote.WasteCollectionEnabled == true)
+                quote.TotalPrice += 400;
 
-            await _context.Quotes.AddAsync(quote);
-            await _context.SaveChangesAsync();
+            _context.Quotes.Add(quote);
+
+            if (await _context.SaveChangesAsync() < 0)
+                return BadRequest();
+
+            return Ok(quote);
         }
     }
 }

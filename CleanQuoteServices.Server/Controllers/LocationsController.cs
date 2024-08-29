@@ -20,7 +20,7 @@ namespace CleanQuoteServices.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
-            return await _context.Locations.ToListAsync();
+            return Ok(await _context.Locations.ToListAsync());
         }
     }
 }
