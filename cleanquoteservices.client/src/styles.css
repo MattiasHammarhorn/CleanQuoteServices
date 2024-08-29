@@ -6,3 +6,8 @@ body {
 form {
     width: 500px;
 }
+
+.review {
+  background-color: white !important;
+  color: black !important;
+}

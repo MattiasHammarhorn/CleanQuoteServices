@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable, map } from 'rxjs';
 
 interface IQuote {
   location?: ILocation;
   locationId?: number;
+  totalPrice: number;
   totalSquareMeters: number;
   balconyCleaningEnabled: boolean;
   windowCleaningEnabled: boolean;
@@ -27,6 +29,7 @@ export class AppComponent implements OnInit {
   quote: IQuote = {
     location: undefined,
     locationId: undefined,
+    totalPrice: 0,
     totalSquareMeters: 0,
     balconyCleaningEnabled: false,
     windowCleaningEnabled: false,
@@ -35,6 +38,8 @@ export class AppComponent implements OnInit {
 
   locations: ILocation[] = [];
   selectedLocationId?: number;
+  
+  postSuccessful: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -64,10 +69,29 @@ export class AppComponent implements OnInit {
     }
   }
 
-  calculateQuote() {
+  postQuote() {
     this.refreshQuote();
-    this.http.post<IQuote>('api/quotes/', this.quote).subscribe();
+    //this.postQuote2(this.quote).subscribe();
+
+    this.http.post<IQuote>('api/quotes/', this.quote).subscribe(response => {
+      console.log(response);
+      this.postSuccessful = true;
+      this.quote.totalPrice = response.totalPrice;
+    });
+    //this.http.post(Url, JSON.stringify(data), requestOptions)
+    //  .map((response: Response) => response.json())
   }
+
+  //postQuote2(quote: IQuote): Observable<IQuote> {
+  //  let quote2;
+
+  //  return this.http
+  //    .post<IQuote>('api/quotes/', this.quote)
+  //    .pipe(map((quote: IQuote) => {
+  //      this.quote.next(quote);
+  //      return quote;
+  //    }));
+  //}
 
   logQuote() {
     console.log(this.quote);

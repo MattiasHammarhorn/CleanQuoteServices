@@ -27,8 +27,12 @@ namespace CleanQuoteServices.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Quote>> CreateQuote(Quote quote)
         {
+            Quote quoteToSave = new Quote();
+
+            //quote.Location = null;
+
             // Price Calculation
-            quote.TotalPrice = quote.Location.PricePerSqm * quote.TotalSquareMeters;
+            //quote.TotalPrice = quote.Location.PricePerSqm * quote.TotalSquareMeters;
 
             // Additional optional services
             if (quote.WindowCleaningEnabled == true)
@@ -38,12 +42,19 @@ namespace CleanQuoteServices.Server.Controllers
             if (quote.WasteCollectionEnabled == true)
                 quote.TotalPrice += 400;
 
-            _context.Quotes.Add(quote);
+            quoteToSave.LocationId = quote.Location.LocationId;
+            quoteToSave.TotalSquareMeters = quote.TotalSquareMeters;
+            quoteToSave.TotalPrice = quote.Location.PricePerSqm * quote.TotalSquareMeters;
+            quoteToSave.BalconyCleaningEnabled = quote.BalconyCleaningEnabled;
+            quoteToSave.WindowCleaningEnabled = quote.WindowCleaningEnabled;
+            quoteToSave.WasteCollectionEnabled = quote.WasteCollectionEnabled;
+
+            _context.Quotes.Add(quoteToSave);
 
             if (await _context.SaveChangesAsync() < 0)
                 return BadRequest();
 
-            return Ok(quote);
+            return Ok(quoteToSave);
         }
     }
 }
