@@ -7,7 +7,7 @@ namespace CleanQuoteServices.Server.Data.Entities
         [Key]
         public int LocationId { get; set; }
         public string LocationName { get; set; }
-        public float PricePerSqm { get; set; }
+        public decimal PricePerSqm { get; set; }
         public bool HasWindowCleaning { get; set; }
         public bool HasBalconyCleaning { get; set; }
         public bool HasWasteCollection{ get; set; }

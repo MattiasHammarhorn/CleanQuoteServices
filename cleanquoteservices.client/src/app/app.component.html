@@ -1,24 +1,36 @@
-﻿<h1 id="tableLabel">Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!forecasts"><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationangular">https://aka.ms/jspsintegrationangular</a> for more details.</em></p>
-
-<table *ngIf="forecasts">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let forecast of forecasts">
-            <td>{{ forecast.date }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>
+<div>
+  <form (change)="logQuote()" (ngSubmit)="calculateQuote()">
+    <div>
+      <label for="selectedLocationId">Location</label>
+      <select name="selectedLocationId" [(ngModel)]="quote.location">
+        <option *ngFor="let location of locations" [ngValue]="location" >{{location.locationName}}
+        </option>
+      </select>
+     </div>
+     <div>
+      <label for="totalSquareMeters">Square Meters</label>
+      <input name="totalSquareMeters"
+             [(ngModel)]="quote.totalSquareMeters"
+             type="number" />
+    </div>
+    <div [hidden]="quote.location?.hasBalconyCleaning ? false : true">
+      <label for="balconyCleaningEnabled">Balcony Cleaning</label>
+      <input name="balconyCleaningEnabled"
+             [(ngModel)]="quote.balconyCleaningEnabled"
+             type="checkbox" />
+    </div>
+    <div [hidden]="quote.location?.hasWindowCleaning ? false : true">
+      <label for="windowCleaningEnabled">Window Cleaning</label>
+      <input name="windowCleaningEnabled"
+             [(ngModel)]="quote.windowCleaningEnabled"
+             type="checkbox" />
+    </div>
+    <div [hidden]="quote.location?.hasWasteCollection ? false : true">
+      <label for="wasteCollectionEnabled">Waste Collection</label>
+      <input name="wasteCollectionEnabled"
+             [(ngModel)]="quote.wasteCollectionEnabled"
+             type="checkbox" />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+</div>

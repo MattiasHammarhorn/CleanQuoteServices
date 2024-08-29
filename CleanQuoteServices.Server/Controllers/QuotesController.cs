@@ -22,5 +22,24 @@ namespace CleanQuoteServices.Server.Controllers
         {
             return await _context.Quotes.ToListAsync();
         }
+
+        // POST: api/Quotes
+        [HttpPost]
+        public async Task CreateQuote(Quote quote)
+        {
+            // New service
+            quote.TotalPrice = quote.Location.PricePerSqm * quote.TotalSquareMeters;
+
+            // Additional optional services
+            if (quote.BalconyCleaningEnabled = true)
+                quote.TotalPrice += 300;
+            if (quote.BalconyCleaningEnabled = true)
+                quote.TotalPrice += 300;
+            if (quote.BalconyCleaningEnabled = true)
+                quote.TotalPrice += 300;
+
+            await _context.Quotes.AddAsync(quote);
+            await _context.SaveChangesAsync();
+        }
     }
 }
