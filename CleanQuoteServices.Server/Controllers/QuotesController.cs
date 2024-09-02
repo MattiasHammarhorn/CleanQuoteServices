@@ -1,5 +1,6 @@
 ﻿using CleanQuoteServices.Server.Data;
 using CleanQuoteServices.Server.Data.Entities;
+using CleanQuoteServices.Server.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,7 @@ namespace CleanQuoteServices.Server.Controllers
 
             quoteToSave.LocationId = quote.Location.LocationId;
             quoteToSave.TotalSquareMeters = quote.TotalSquareMeters;
-            quoteToSave.TotalPrice = CalculateQuotePrice(quote);
+            quoteToSave.TotalPrice = PriceCalculator.CalculateQuotePrice(quote);
             quoteToSave.BalconyCleaningEnabled = quote.BalconyCleaningEnabled;
             quoteToSave.WindowCleaningEnabled = quote.WindowCleaningEnabled;
             quoteToSave.WasteCollectionEnabled = quote.WasteCollectionEnabled;
@@ -42,22 +43,6 @@ namespace CleanQuoteServices.Server.Controllers
                 return BadRequest();
 
             return Ok(quoteToSave);
-        }
-
-        public decimal CalculateQuotePrice(Quote quote)
-        {
-            // Price Calculation
-            decimal totalPrice = quote.Location.PricePerSqm * quote.TotalSquareMeters;
-
-            // Additional optional services
-            if (quote.WindowCleaningEnabled == true)
-                quote.TotalPrice += 300;
-            if (quote.BalconyCleaningEnabled == true)
-                quote.TotalPrice += 150;
-            if (quote.WasteCollectionEnabled == true)
-                quote.TotalPrice += 400;
-
-            return totalPrice;
         }
     }
 }
