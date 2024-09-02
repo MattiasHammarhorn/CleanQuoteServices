@@ -1,0 +1,9 @@
+* {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.card-body img {
+  height: 10rem;
+  width: 100%;
+}

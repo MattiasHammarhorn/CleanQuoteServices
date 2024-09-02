@@ -1,6 +1,7 @@
-<form (change)="logQuote()" (ngSubmit)="submitQuote()">
-  <div class="row">
-    <div class="input-group mb-3 col">
+<form class="align-center-items" (change)="logQuote()" (ngSubmit)="submitQuote()">
+
+  <div class="row mb-3">
+    <div class="col-md-4">
       <label for="selectedLocationId" class="form-label">Location: </label>
       <select id="selectedLocationId"
               name="selectedLocationId"
@@ -11,53 +12,92 @@
         </option>
       </select>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <div class="input-group mb-3">
-        <label for="totalSquareMeters" class="form-label">Square Meters: </label>
-        <input id="totalSquareMeters"
-               name="totalSquareMeters"
-               [(ngModel)]="quote.totalSquareMeters"
-               type="number"
-               class="pl-3" />
-      </div>
+    <div class="col-md-4">
+      <label for="totalSquareMeters" class="form-label">Square Meters: </label>
+      <input id="totalSquareMeters"
+             name="totalSquareMeters"
+             [(ngModel)]="quote.totalSquareMeters"
+             class="form-control"
+             type="number" />
     </div>
   </div>
 
   <div class="row">
-    <div class="col">
-      <div class="input-group mb-3 form-check" [hidden]="quote.location?.hasBalconyCleaning ?   false : true">
-        <label for="balconyCleaningEnabled" class="form-check-label">Balcony Cleaning: </label>
+
+    <div class="col-md-4 mb-3" [hidden]="quote.location?.hasBalconyCleaning ? false : true">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Want some balcony cleaning?</h5>
+          <img src="../../assets/images/balcony-cleaning.jpg" class="card-image-top" />
+          <div class="card-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          </div>
+          <input id="balconyCleaningEnabled"
+                 name="balconyCleaningEnabled"
+                 [(ngModel)]="quote.balconyCleaningEnabled"
+                 type="checkbox"
+                 class="col-8 form-check-input" />
+        </div>
+      </div>
+      <!--<div class="form-check">
+        <label for="balconyCleaningEnabled" class="col-4 form-check-label">Balcony Cleaning: </label>
         <input id="balconyCleaningEnabled"
                name="balconyCleaningEnabled"
                [(ngModel)]="quote.balconyCleaningEnabled"
                type="checkbox"
-               class="form-check-input" />
-      </div>
+               class="col-8 form-check-input" />
+      </div>-->
     </div>
 
-    <div class="col">
-      <div class="input-group mb-3 form-check" [hidden]="quote.location?.hasWindowCleaning ?  false : true">
+    <div class="col-md-4 mb-3" [hidden]="quote.location?.hasWindowCleaning ? false : true">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">How about some window cleaning?</h5>
+          <img src="../../assets/images/window-cleaning.jpg" class="card-image-top" />
+          <div class="card-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          </div>
+          <input id="windowCleaningEnabled"
+                 name="windowCleaningEnabled"
+                 [(ngModel)]="quote.windowCleaningEnabled"
+                 type="checkbox"
+                 class="col-8 form-check-input" />
+        </div>
+      </div>
+      <!--<div class="form-check">
         <label for="windowCleaningEnabled" class="form-check-label">Window Cleaning: </label>
         <input id="windowCleaningEnabled"
                name="windowCleaningEnabled"
                [(ngModel)]="quote.windowCleaningEnabled"
                type="checkbox"
                class="form-check-input" />
-      </div>
+      </div>-->
     </div>
 
-    <div class="col">
-      <div class="input-group mb-3 form-check" [hidden]="quote.location?.hasWasteCollection ?   false : true">
+    <div class="col-md-4 mb-3" [hidden]="quote.location?.hasWasteCollection ? false : true">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">And why not some waste collection?</h5>
+          <img src="../../assets/images/garbage.jpg" class="card-image-top" />
+          <div class="card-text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
+          </div>
+          <input id="wasteCollectionEnabled"
+                 name="wasteCollectionEnabled"
+                 [(ngModel)]="quote.wasteCollectionEnabled"
+                 type="checkbox"
+                 class="col-8 form-check-input" />
+        </div>
+      </div>
+      <!--<div class="form-check">
         <label for="wasteCollectionEnabled" class="form-check-label">Waste Collection: </label>
         <input id="wasteCollectionEnabled"
                name="wasteCollectionEnabled"
                [(ngModel)]="quote.wasteCollectionEnabled"
                type="checkbox"
                class="form-check-input" />
-      </div>
+      </div>-->
     </div>
   </div>
 
