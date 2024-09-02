@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IQuote } from '../quote.model';
 import { ILocation } from '../location.model';
-import { HttpClient } from '@angular/common/http';
+import { ApiService } from './api.service';
 
 @Component({
   selector: 'app-quote',
@@ -25,44 +25,40 @@ export class QuoteComponent {
 
   postSuccessful: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private apiSvc: ApiService) { }
 
   ngOnInit() {
     this.getLocations();
   }
 
   getLocations() {
-    this.http.get<ILocation[]>('api/locations').subscribe(
-      locations => {
-        console.log(locations);
-        this.locations = locations;
-      });
-  }
-
-  refreshQuote() {
-    if (!this.quote.location?.hasBalconyCleaning) {
-      this.quote.balconyCleaningEnabled = false;
-    }
-
-    if (!this.quote.location?.hasWindowCleaning == true) {
-      this.quote.windowCleaningEnabled = true;
-    }
-
-    if (!this.quote.location?.hasWasteCollection) {
-      this.quote.wasteCollectionEnabled = false;
-    }
-  }
-
-  postQuote() {
-    this.refreshQuote();
-
-    this.http.post<IQuote>('api/quotes/', this.quote).subscribe(response => {
-      console.log(response);
-      this.postSuccessful = true;
-      this.quote.totalPrice = response.totalPrice;
+    this.apiSvc.getLocations().subscribe(locations => {
+      console.log(locations);
+      this.locations = locations;
     });
   }
 
+  submitQuote() {
+    this.refreshQuote();
+
+    this.apiSvc.postQuote(this.quote).subscribe(result => {
+      console.log(result);
+      this.postSuccessful = true;
+      this.quote.totalPrice = result.totalPrice;
+    });
+  }
+
+  refreshQuote() {
+    if (!this.quote.location?.hasBalconyCleaning)
+      this.quote.balconyCleaningEnabled = false;
+
+    if (!this.quote.location?.hasWindowCleaning == true)
+      this.quote.windowCleaningEnabled = true;
+
+    if (!this.quote.location?.hasWasteCollection)
+      this.quote.wasteCollectionEnabled = false;
+  }
+  
   logQuote() {
     console.log(this.quote);
   }
