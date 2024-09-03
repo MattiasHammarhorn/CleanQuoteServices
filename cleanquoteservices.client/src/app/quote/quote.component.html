@@ -1,17 +1,21 @@
-<form class="align-center-items" (change)="logQuote()" (ngSubmit)="submitQuote()">
+<form class="align-center-items" #quoteForm="ngForm" (change)="logQuote()" (ngSubmit)="submitQuote()">
 
   <div class="row mb-3">
     <div class="col-md-4">
       <label for="selectedLocationId" class="form-label">Location: </label>
       <select id="selectedLocationId"
               name="selectedLocationId"
+              required
               [(ngModel)]="quote.location"
-              class="form-select">
+              class="form-select"
+              #location="ngModel">
         <option *ngFor="let location of locations" [ngValue]="location">
           {{location.locationName}}
         </option>
       </select>
     </div>
+
+    <div [hidden]="location.valid">Required</div>
 
     <div class="col-md-4">
       <label for="totalSquareMeters" class="form-label">Square Meters: </label>
@@ -19,8 +23,12 @@
              name="totalSquareMeters"
              [(ngModel)]="quote.totalSquareMeters"
              class="form-control"
-             type="number" />
+             type="number"
+             required min="1"
+             #totalSquareMeters="ngModel" />
     </div>
+
+    <div [hidden]="totalSquareMeters.valid">Must be number higher than 0.</div>
   </div>
 
   <div class="row">
@@ -40,14 +48,6 @@
                  class="col-8 form-check-input" />
         </div>
       </div>
-      <!--<div class="form-check">
-        <label for="balconyCleaningEnabled" class="col-4 form-check-label">Balcony Cleaning: </label>
-        <input id="balconyCleaningEnabled"
-               name="balconyCleaningEnabled"
-               [(ngModel)]="quote.balconyCleaningEnabled"
-               type="checkbox"
-               class="col-8 form-check-input" />
-      </div>-->
     </div>
 
     <div class="col-md-4 mb-3" [hidden]="quote.location?.hasWindowCleaning ? false : true">
@@ -65,14 +65,6 @@
                  class="col-8 form-check-input" />
         </div>
       </div>
-      <!--<div class="form-check">
-        <label for="windowCleaningEnabled" class="form-check-label">Window Cleaning: </label>
-        <input id="windowCleaningEnabled"
-               name="windowCleaningEnabled"
-               [(ngModel)]="quote.windowCleaningEnabled"
-               type="checkbox"
-               class="form-check-input" />
-      </div>-->
     </div>
 
     <div class="col-md-4 mb-3" [hidden]="quote.location?.hasWasteCollection ? false : true">
@@ -90,18 +82,10 @@
                  class="col-8 form-check-input" />
         </div>
       </div>
-      <!--<div class="form-check">
-        <label for="wasteCollectionEnabled" class="form-check-label">Waste Collection: </label>
-        <input id="wasteCollectionEnabled"
-               name="wasteCollectionEnabled"
-               [(ngModel)]="quote.wasteCollectionEnabled"
-               type="checkbox"
-               class="form-check-input" />
-      </div>-->
     </div>
   </div>
 
-  <button class="btn btn-primary" type="submit">Submit</button>
+  <button [disabled]="!quoteForm.form.valid" class="btn btn-primary" type="submit">Submit</button>
 </form>
 
 <div class="container review" [hidden]="postSuccessful == false">
