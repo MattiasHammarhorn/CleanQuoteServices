@@ -13,9 +13,8 @@
           {{location.locationName}}
         </option>
       </select>
+      <div *ngIf="location.invalid && (location.dirty || location.touched)" style="color:red;">• Location is required.</div>
     </div>
-
-    <div [hidden]="location.valid">Required</div>
 
     <div class="col-md-4">
       <label for="totalSquareMeters" class="form-label">Square Meters: </label>
@@ -26,13 +25,11 @@
              type="number"
              required min="1"
              #totalSquareMeters="ngModel" />
+      <div *ngIf="totalSquareMeters.invalid && (totalSquareMeters.dirty || totalSquareMeters.touched)" style="color:red;">• Must be number higher than 0.</div>
     </div>
-
-    <div [hidden]="totalSquareMeters.valid">Must be number higher than 0.</div>
   </div>
 
   <div class="row">
-
     <div class="col-md-4 mb-3" [hidden]="quote.location?.hasBalconyCleaning ? false : true">
       <div class="card">
         <div class="card-body">
